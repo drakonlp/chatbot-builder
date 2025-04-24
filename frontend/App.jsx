@@ -5,48 +5,54 @@ function App() {
   const [account, setAccount] = useState(null);
   const [error, setError] = useState(null);
 
-  // Verifica se o MetaMask está disponível
+  // Verifica se há provider Ethereum (MetaMask, etc.)
   useEffect(() => {
     if (typeof window !== 'undefined' && window.ethereum) {
       setHasProvider(true);
 
-      // Listener de mudança de conta
+      // Atualiza conta se o usuário trocar na MetaMask
       window.ethereum.on('accountsChanged', (accounts) => {
-        if (accounts.length > 0) {
-          setAccount(accounts[0]);
-        } else {
-          setAccount(null);
-        }
+        setAccount(accounts.length > 0 ? accounts[0] : null);
       });
     } else {
       setHasProvider(false);
     }
+
+    // Cleanup do listener
+    return () => {
+      if (window.ethereum?.removeListener) {
+        window.ethereum.removeListener('accountsChanged', () => {});
+      }
+    };
   }, []);
 
-  // Conectar à conta do usuário
+  // Função para conectar a carteira
   const connectWallet = async () => {
-    try {
-      if (typeof window !== 'undefined' && window.ethereum) {
+    if (typeof window !== 'undefined' && window.ethereum) {
+      try {
         const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
         setAccount(accounts[0]);
-      } else {
-        setError('MetaMask não encontrado.');
+        setError(null);
+      } catch (err) {
+        setError('Erro ao conectar: ' + (err?.message || 'Desconhecido'));
       }
-    } catch (err) {
-      setError('Erro ao conectar: ' + err.message);
+    } else {
+      setError('MetaMask não está disponível neste navegador.');
     }
   };
 
   return (
-    <div style={{ padding: '2rem', fontFamily: 'Arial' }}>
-      <h1>Conectar à MetaMask</h1>
+    <div style={{ padding: '2rem', fontFamily: 'Arial, sans-serif' }}>
+      <h1>Chatbot Web3 – Conectar à MetaMask</h1>
 
       {!hasProvider ? (
         <p style={{ color: 'red' }}>MetaMask não está instalado. Instale para continuar.</p>
       ) : account ? (
         <p><strong>Conta conectada:</strong> {account}</p>
       ) : (
-        <button onClick={connectWallet}>Conectar Wallet</button>
+        <button onClick={connectWallet} style={{ padding: '0.5rem 1rem' }}>
+          Conectar Wallet
+        </button>
       )}
 
       {error && <p style={{ color: 'red' }}>{error}</p>}

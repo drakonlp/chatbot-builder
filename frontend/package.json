@@ -1,6 +1,9 @@
 {
   "name": "chatbot-frontend",
   "version": "1.0.0",
+  "description": "Interface do Chatbot Builder em React com Vite",
+  "author": "Seu Nome ou Organização",
+  "license": "MIT",
   "scripts": {
     "dev": "vite",
     "build": "vite build",

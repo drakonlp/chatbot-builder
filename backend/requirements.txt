@@ -1,5 +1,7 @@
+# Requisitos para o backend FastAPI com PostgreSQL
+
 fastapi
-uvicorn
+uvicorn[standard]
 sqlalchemy
 psycopg2-binary
 pydantic
