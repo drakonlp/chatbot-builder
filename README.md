@@ -1,3 +1,6 @@
 # Chatbot Builder
 
-Projeto final com backend FastAPI e frontend React pronto para deploy no Render e Vercel.
+Projeto completo com frontend em React/Vite e backend em FastAPI.
+Pronto para deploy na Vercel e Render.
+
+Veja o README.md do projeto principal para instruções.
