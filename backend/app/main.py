@@ -1,0 +1,1 @@
+# conteúdo simbólico de main.py com rotas de fluxo e autenticação

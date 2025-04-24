@@ -1,0 +1,1 @@
+// conteúdo simbólico do LegendaLateral.jsx
