@@ -1,1 +1,7 @@
-# conteúdo simbólico de main.py com rotas de fluxo e autenticação
+from fastapi import FastAPI
+
+app = FastAPI()
+
+@app.get("/")
+def root():
+    return {"message": "API funcionando corretamente"}
